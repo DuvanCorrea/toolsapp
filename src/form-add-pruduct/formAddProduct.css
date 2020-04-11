@@ -1,0 +1,21 @@
+.input-image {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+  cursor: pointer;
+}
+
+.div-image {
+  position: relative;
+}
+
+.subtitles{
+    font-size: 14px;
+}

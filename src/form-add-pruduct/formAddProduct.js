@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./formAddProduct.css";
 
 export default class FormAddProduct extends Component {
 
@@ -7,21 +8,45 @@ export default class FormAddProduct extends Component {
         cloth: "",
         size: "",
         gender: "",
-        quiantity: 0,
-        details: ""
+        quantity: 0,
+        details: "",
+        image: "",
+        productImage: "https://image.flaticon.com/icons/png/512/14/14407.png"
+
+    }
+
+    onChange = (e) => {
+
+        var reader = new FileReader();
+
+        reader.readAsDataURL(e.target.files[0]);
+
+        reader.onload = () => {
+            this.setState({ productImage: reader.result });
+        }
+
     }
 
 
     onSubmint = (e) => {
-        let productTemp = {
-            product: this.state.product,
-            cloth: this.state.cloth,
-            size: this.state.size,
-            gender: this.state.gender,
-            quantity: this.state.quiantity,
-            details: this.state.details,
+
+        if (this.state.productImage !== "https://image.flaticon.com/icons/png/512/14/14407.png") {
+
+            let productTemp = {
+                product: this.state.product,
+                cloth: this.state.cloth,
+                size: this.state.size,
+                gender: this.state.gender,
+                quantity: this.state.quantity,
+                details: this.state.details,
+                imgProduct: this.state.productImage
+            }
+            this.props.addProduct(productTemp);
+        } else {
+            alert("Agrega una imagen del producto");
         }
-        this.props.addProduct(productTemp);
+
+
         e.preventDefault();
     }
 
@@ -31,6 +56,10 @@ export default class FormAddProduct extends Component {
         });
     }
 
+    /*uploadImage = (e) => {
+        console.log(e);
+    }*/
+
     render() {
         return (
             <div className="card">
@@ -39,57 +68,90 @@ export default class FormAddProduct extends Component {
                 </div>
                 <div className="card-body">
                     <form className="form" onSubmit={this.onSubmint}>
+                        <div className="row">
+                            <div className="col-md-6">
+
+
+                                <div className="div-image">
+                                    <input onChange={(e) => this.onChange(e)} id="imageUp" type="file" className="input-image"></input>
+                                    <label><img className="img-fluid imgInput rounded" src={this.state.productImage} alt=""></img></label>
+                                </div>
+
+
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <h6 className="subtitles">Producto</h6>
+                                    <select defaultValue="DEFAULT" name="product" className="form-control form-control-sm" onChange={this.onchange}>
+                                        <option value="DEFAULT">Seleccionar</option>
+                                        <option value="Buzo">Buzo</option>
+                                        <option value="Sudadera">Sudadera</option>
+                                        <option value="Pantaloneta">Pantaloneta</option>
+                                        <option value="Camisa">Camisa</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <h6 className="subtitles">Cantidad</h6>
+                                    <input
+                                        name="quantity"
+                                        className="form-control form-control-sm"
+                                        type="number"
+                                        placeholder="Cantidad"
+                                        min="0"
+                                        onChange={this.onchange}></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <h6 className="subtitles">Tela</h6>
+                                    <select defaultValue="DEFAULT" name="cloth" className="form-control form-control-sm" id="select-product" onChange={this.onchange}>
+                                        <option value="DEFAULT">Seleccionar</option>
+                                        <option value="Algodón">Algodón</option>
+                                        <option value="Conta vientos">Corta vientos</option>
+                                        <option value="Bioto">Bioto</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <h6 className="subtitles">Talla</h6>
+                                    <select defaultValue="DEFAULT" name="size" className="form-control form-control-sm" id="select-product" onChange={this.onchange}>
+                                        <option value="DEFAULT">Seleccionar</option>
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                        <option value="XXL">XXL</option>
+                                        <option value="XXXL">XXXL</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="form-group">
+                                    <h6 className="subtitles">Género</h6>
+                                    <select defaultValue="DEFAULT" name="gender" className="form-control form-control-sm" id="select-product" onChange={this.onchange}>
+                                        <option value="DEFAULT">Seleccionar</option>
+                                        <option value="masculino">Masculino</option>
+                                        <option value="femenino">Femenino</option>
+                                        <option value="alien">Alien</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
                         <div className="form-group">
-                            <h6>Producto</h6>
-                            <select name="product" className="form-control form-control-sm" onChange={this.onchange}>
-                                <option selected="">Seleccionar</option>
-                                <option values="buzo">Buzo</option>
-                                <option values="sudadera">Sudadera</option>
-                                <option values="pantaloneta">Pantaloneta</option>
-                                <option values="camisa">Camisa</option>
-                                <option values="otro">Otro</option>
-                            </select>
                         </div>
                         <div className="form-group">
-                            <h6>Tela</h6>
-                            <select name="cloth" className="form-control form-control-sm" id="select-product" onChange={this.onchange}>
-                                <option selected="">Seleccionar</option>
-                                <option values="algodon">Algodón</option>
-                                <option values="contaVientos">Corta vientos</option>
-                                <option values="bioto">Bioto</option>
-                                <option values="otro">Otro</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <h6>Talla</h6>
-                            <select name="size" className="form-control form-control-sm" id="select-product" onChange={this.onchange}>
-                                <option selected="">Seleccionar</option>
-                                <option values="xs">XS</option>
-                                <option values="s">S</option>
-                                <option values="m">M</option>
-                                <option values="l">L</option>
-                                <option values="xl">XL</option>
-                                <option values="xxl">XXL</option>
-                                <option values="xxxl">XXXL</option>
-                                <option values="otro">Otro</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <h6>Género</h6>
-                            <select name="gender" className="form-control form-control-sm" id="select-product" onChange={this.onchange}>
-                                <option selected="">Seleccionar</option>
-                                <option selected="true" values="masculino">Masculino</option>
-                                <option values="femenino">Femenino</option>
-                                <option values="alien">Alien</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <h6>Cantidad</h6>
-                            <input name="quantity" className="form-control form-control-sm" type="number" placeholder="Cantidad" onChange={this.onchange}></input>
-                        </div>
-                        <div className="form-group">
-                            <h6>Detalles</h6>
+                            <h6 className="subtitles">Detalles</h6>
                             <textarea name="details" className="form-control form-control-sm" rows="2" placeholder="Detalles" onChange={this.onchange}></textarea>
                         </div>
                         <div className="">
