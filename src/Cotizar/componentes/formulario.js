@@ -27,7 +27,7 @@ export default class formulario extends Component {
     valorTopeParaDescuento: 70000,
 
     valorPrenda: 0,
-    valorDomicilio: 0,
+    valorDomicilio: 9000,
     descuento: 0,
     domicilioEstacion: 6000,
   };
@@ -41,21 +41,29 @@ export default class formulario extends Component {
   onclick = async (e) => {
     e.preventDefault();
 
-    /*if (
-      parseInt(this.state.valorDomicilio) + parseInt(this.state.valorPrenda) >=
-      parseInt(this.state.valorTopeParaDescuento)
-    ) {
-      this.setState({
-        descuento: 1000,
-      });
-    }*/
-
     await this.setState({
       valorPrenda: parseInt(this.state.valorPrenda, 10),
       valorDomicilio: parseInt(this.state.valorDomicilio, 10),
       EnvioIncluido: parseInt(this.state.EnvioIncluido, 10),
       gananciaPrenda: parseFloat(this.state.gananciaPrenda, 10),
     });
+
+    if (this.state.valorPrenda >= 67000) {
+      console.log("hgoñl");
+      this.setState({
+        gananciaPrenda: 0.45,
+      });
+      await this.setState({
+        gananciaPrenda: parseFloat(this.state.gananciaPrenda, 10),
+      });
+    } else {
+      this.setState({
+        gananciaPrenda: 0.49,
+      });
+      await this.setState({
+        gananciaPrenda: parseFloat(this.state.gananciaPrenda, 10),
+      });
+    }
 
     this.props.cotizarEnvioPrenda1(this.state);
     console.log(this.state);
@@ -97,21 +105,6 @@ export default class formulario extends Component {
                 </div>
               </div>
             </div>
-            <hr></hr>
-            <div className="row ">
-              <div className="col-md-2 col-4 mt-2">
-                <div className="form-group">
-                  <h6 className="subtitles">Ganacias</h6>
-                  <input
-                    disabled
-                    type="text"
-                    className="form-control"
-                    value="49%"
-                  ></input>
-                </div>
-              </div>
-            </div>
-            <hr></hr>
             <div className="row">
               <div className="col-12 mt-2">
                 <button
@@ -139,7 +132,6 @@ export default class formulario extends Component {
                   <p>${this.props.cotizacion.valorPrenda}</p>
                 </div>
               </div>
-              <hr></hr>
               <div className="row">
                 <div className="col-5">
                   <h6 className="text-muted">Domicilio</h6>
@@ -148,7 +140,6 @@ export default class formulario extends Component {
                   <p>${this.props.cotizacion.valorDomicilio}</p>
                 </div>
               </div>
-              <hr></hr>
               <div className="row">
                 <div className="col-5">
                   <h6 className="text-muted">Ganancia%</h6>
@@ -157,7 +148,6 @@ export default class formulario extends Component {
                   <p>{this.props.cotizacion.gananciaPrenda * 100}%</p>
                 </div>
               </div>
-              <hr></hr>
 
               <div className="row">
                 <div className="col-5">
@@ -167,12 +157,11 @@ export default class formulario extends Component {
                   <p>$0</p>
                 </div>
               </div>
-              <hr></hr>
             </div>
             <div className="card-footer">
               <div className="row">
                 <div className="col-5">
-                  <h6 className="">Valor de venta normal</h6>
+                  <h6 className="">Valor de venta SIN domicilio</h6>
                 </div>
                 <div className="col-6">
                   <p>
@@ -186,7 +175,7 @@ export default class formulario extends Component {
               <hr></hr>
               <div className="row">
                 <div className="col-5">
-                  <h6 className="">Valor de venta con domicilio</h6>
+                  <h6 className="">Valor de venta CON domicilio</h6>
                 </div>
                 <div className="col-6">
                   <p>
@@ -202,7 +191,6 @@ export default class formulario extends Component {
               <div className="row">
                 <div className="col-5">
                   <h6 className="">Valor de venta en estacion</h6>
-                  <label className="text-muted">(Solo si es necesario)</label>
                 </div>
                 <div className="col-6">
                   <p>
