@@ -29,12 +29,24 @@ export default class formulario extends Component {
     valorDomicilio: 0,
   };
 
+  onchange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  onclick = (e) => {
+    console.log("holi");
+    e.preventDefault();
+    this.props.cotizar(this.state);
+  };
+
   render() {
     console.log("valor: ", this.props.cotizacion);
     if (this.props.cotizacion !== null) {
       return (
         <div>
-          <form className="form mt-4">
+          <div className="form mt-4">
             <div className="row ">
               <div className="col-md-12">
                 <div className="form-group">
@@ -42,6 +54,8 @@ export default class formulario extends Component {
                     Valor en que compramos la prenda
                   </h6>
                   <input
+                    onChange={this.onchange()}
+                    name="valorPrenda"
                     type="number"
                     className="form-control"
                     placeholder="valor de compra"
@@ -54,6 +68,8 @@ export default class formulario extends Component {
                 <div className="form-group">
                   <h6 className="subtitles">Valor del domicilio</h6>
                   <input
+                    onChange={(e) => this.onchange(e)}
+                    name="valorDomicilio"
                     type="number"
                     className="form-control"
                     placeholder="domicilio"
@@ -76,21 +92,26 @@ export default class formulario extends Component {
             </div>
             <div className="row">
               <div className="col-12 mt-2">
-                <button className="btn btn-outline-success btn-block">
+                <button
+                  onClick={(e) => this.onclick(e)}
+                  className="btn btn-outline-success btn-block"
+                >
                   GENERAR
                 </button>
               </div>
             </div>
-          </form>
+          </div>
 
           <div className="card mt-3">
             <div className="card-header">
               <h5>Resumen</h5>
               <div className="row">
                 <div className="col-5">
-                  <p></p>
+                  <p>Valor prenda:</p>
                 </div>
-                <div className="col-6"></div>
+                <div className="col-6">
+                  <p>{(this.props.cotizacion.valorPrenda = 0)}</p>
+                </div>
                 <p></p>
               </div>
             </div>

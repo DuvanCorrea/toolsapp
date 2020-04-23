@@ -7,7 +7,10 @@ export default class cotizar extends Component {
   render() {
     return (
       <div className="container">
-        <Formulario cotizacion={this.props.cotizacion} />
+        <Formulario
+          cotizacion={this.props.cotizacion}
+          cotizarEnvioPrenda1={this.props.cotizarEnvioPrenda1}
+        />
       </div>
     );
   }

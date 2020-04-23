@@ -22,7 +22,7 @@ export default class App extends Component {
         },
       ],
       pagActual: "cotizar",
-      cotizacion: "",
+      cotizacion: null,
     };
   }
 
@@ -230,6 +230,12 @@ export default class App extends Component {
     });
   };
 
+  cotizarEnvioPrenda1 = (cot) => {
+    this.setState({
+      cotizacion: cot,
+    });
+  };
+
   render() {
     switch (this.state.pagActual) {
       case "/":
@@ -265,7 +271,10 @@ export default class App extends Component {
               cambiarPag={this.cambiarPag}
               boton={this.state.pagActual}
             />
-            <Cotizar cotizacion={this.state.cotizacion} />
+            <Cotizar
+              cotizacion={this.state.cotizacion}
+              cotizarEnvioPrenda1={this.state.cotizarEnvioPrenda1}
+            />
           </div>
         );
 
