@@ -21,7 +21,7 @@ export default class App extends Component {
           total: 0,
         },
       ],
-      pagActual: "cotizar",
+      pagActual: "/",
       cotizacion: {
         proveedores: {
           alonso: {
@@ -250,11 +250,19 @@ export default class App extends Component {
     doc.save("Fer Te Amo.pdf");
   };
 
+  // Funciones para redireccionar
   cambiarPag = () => {
     this.setState({
       pagActual: "cotizar",
     });
   };
+  cambiarAgenerarPdf = () => {
+    this.setState({
+      pagActual: "/",
+    });
+  };
+
+  //FIN Funciones para redireccionar
 
   cotizarEnvioPrenda1 = (cot) => {
     this.setState({
@@ -268,6 +276,7 @@ export default class App extends Component {
         return (
           <div className="app">
             <Navbar
+              cambiarAgenerarPdf={this.cambiarAgenerarPdf}
               generatePDF={this.generatePDF}
               cambiarPag={this.cambiarPag}
             />
@@ -293,6 +302,7 @@ export default class App extends Component {
         return (
           <div className="app">
             <Navbar
+              cambiarAgenerarPdf={this.cambiarAgenerarPdf}
               generatePDF={this.generatePDF}
               cambiarPag={this.cambiarPag}
               boton={this.state.pagActual}

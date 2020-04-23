@@ -6,6 +6,12 @@ export default class navbar extends Component {
       return (
         <nav className="navbar table-dark">
           <div className="navbar-brand">Tools APP</div>
+          <button
+            className="btn btn-outline-light"
+            onClick={this.props.cambiarPag}
+          >
+            Cotizar venta
+          </button>
           <div className="form-group m-0">
             <button
               onClick={this.props.generatePDF}
@@ -15,13 +21,18 @@ export default class navbar extends Component {
               Generar PDF
             </button>
           </div>
-          <a onClick={this.props.cambiarPag}>Cotizar</a>
         </nav>
       );
     } else {
       return (
         <nav className="navbar table-dark">
           <div className="navbar-brand">Tools APP</div>
+          <button
+            className="btn btn-outline-light ml-0"
+            onClick={this.props.cambiarAgenerarPdf}
+          >
+            Pedidos PDF
+          </button>
           <div className="form-group m-0"></div>
         </nav>
       );
