@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/toolsapp/static/css/main.604d5c85.chunk.css",
+    "main.js": "/toolsapp/static/js/main.63947bcd.chunk.js",
+    "main.js.map": "/toolsapp/static/js/main.63947bcd.chunk.js.map",
+    "runtime-main.js": "/toolsapp/static/js/runtime-main.3f7313dc.js",
+    "runtime-main.js.map": "/toolsapp/static/js/runtime-main.3f7313dc.js.map",
+    "static/js/2.3e4dff90.chunk.js": "/toolsapp/static/js/2.3e4dff90.chunk.js",
+    "static/js/2.3e4dff90.chunk.js.map": "/toolsapp/static/js/2.3e4dff90.chunk.js.map",
+    "index.html": "/toolsapp/index.html",
+    "precache-manifest.990e62d0745fbaabb3c12d51b559c5d8.js": "/toolsapp/precache-manifest.990e62d0745fbaabb3c12d51b559c5d8.js",
+    "service-worker.js": "/toolsapp/service-worker.js",
+    "static/css/main.604d5c85.chunk.css.map": "/toolsapp/static/css/main.604d5c85.chunk.css.map",
+    "static/js/2.3e4dff90.chunk.js.LICENSE.txt": "/toolsapp/static/js/2.3e4dff90.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3f7313dc.js",
+    "static/js/2.3e4dff90.chunk.js",
+    "static/css/main.604d5c85.chunk.css",
+    "static/js/main.63947bcd.chunk.js"
+  ]
+}
