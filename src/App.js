@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import Navbar from './navbar/navbar.js';
-import FormAddProduct from './form-add-pruduct/formAddProduct.js'
-import ProductList from './products-list/ProductList.js';
-import jsPDF from 'jspdf';
+import React, { Component } from "react";
+import Navbar from "./navbar/navbar.js";
+import FormAddProduct from "./form-add-pruduct/formAddProduct.js";
+import ProductList from "./products-list/ProductList.js";
+import Cotizar from "./Cotizar/cotizar.js";
+import jsPDF from "jspdf";
 
 export default class App extends Component {
   constructor() {
@@ -10,15 +11,19 @@ export default class App extends Component {
     this.state = {
       products: [],
       copyProducts: [],
-      resumenProductos: [{
-        TBuzo: 0,
-        TSudadera: 0,
-        TPantaloneta: 0,
-        TCamisa: 0,
-        TOtro: 0,
-        total: 0
-      }]
-    }
+      resumenProductos: [
+        {
+          TBuzo: 0,
+          TSudadera: 0,
+          TPantaloneta: 0,
+          TCamisa: 0,
+          TOtro: 0,
+          total: 0,
+        },
+      ],
+      pagActual: "cotizar",
+      cotizacion: "",
+    };
   }
 
   addProductToSummary = (newProduct) => {
@@ -39,10 +44,10 @@ export default class App extends Component {
     } else if (newProduct.product === "Otro") {
       resProd[0].TOtro += 1;
       resProd[0].total += 1;
-    };
+    }
 
     this.setState({
-      resumenProductos: resProd
+      resumenProductos: resProd,
     });
 
     console.log("add to sommary");
@@ -66,55 +71,52 @@ export default class App extends Component {
     } else if (newProduct.product === "Otro") {
       resProd[0].TOtro -= 1;
       resProd[0].total -= 1;
-    };
+    }
 
     this.setState({
-      resumenProductos: resProd
+      resumenProductos: resProd,
     });
 
     console.log("remove of sommary");
   };
 
   addProduct = (newProduct) => {
-
     var productTem = [...this.state.products];
     if (productTem.length !== 0) {
       let newID = productTem[0].id;
       newProduct["id"] = newID + 1;
       productTem.unshift(newProduct);
       this.setState({
-        products: productTem
+        products: productTem,
       });
     } else {
       newProduct["id"] = 1;
       productTem.unshift(newProduct);
       this.setState({
-        products: productTem
+        products: productTem,
       });
-
     }
     // agregarndo producto a contador de resumen
     this.addProductToSummary(newProduct);
-  }
+  };
 
   editProduct = (newProduct) => {
     this.addProductToSummary(newProduct);
     var productTem = [...this.state.products];
-    productTem.forEach(e => {
+    productTem.forEach((e) => {
       if (e.id === newProduct.id) {
         this.deleteProductToSummary(e);
         e = newProduct;
         console.log("Edited :D");
       }
     });
-  }
+  };
 
   deleteProduct = (id) => {
-
     // actualizar en summary
     var productos = this.state.products;
     var prenda;
-    productos.map(e => {
+    productos.map((e) => {
       if (e.id === id) {
         prenda = e;
       }
@@ -123,19 +125,20 @@ export default class App extends Component {
 
     // borrar producto
 
-    var newProducts = this.state.products.filter(product => (product.id !== id));
+    var newProducts = this.state.products.filter(
+      (product) => product.id !== id
+    );
 
     this.setState({
-      products: newProducts
+      products: newProducts,
     });
-  }
+  };
 
   componentDidMount() {
     console.log("Updated...");
   }
 
   generatePDF = () => {
-
     var doc = new jsPDF();
 
     //texto de la descipcion
@@ -159,7 +162,7 @@ export default class App extends Component {
       let productsTem = [...this.state.products];
       doc.setFontSize(TamText);
 
-      productsTem.forEach(e => {
+      productsTem.forEach((e) => {
         if (nImagesxPage !== 0) {
           doc.addImage(e.imgProduct, xImg, yImg, TamX, TamY);
           doc.text(xText, yText, "Producto: " + e.product);
@@ -177,9 +180,7 @@ export default class App extends Component {
 
           yImg += ySlatImg;
           yText += ySlatoText;
-
         } else {
-
           //  agregando pagina y reiniciando contadores
           doc.addPage();
 
@@ -218,34 +219,58 @@ export default class App extends Component {
         }
       });
     } else {
-      doc.text(15, 15, "Dios mio!!! agrega productos primero :D ")
+      doc.text(15, 15, "Dios mio!!! agrega productos primero :D ");
     }
     doc.save("Fer Te Amo.pdf");
+  };
 
-  }
+  cambiarPag = () => {
+    this.setState({
+      pagActual: "cotizar",
+    });
+  };
 
   render() {
-    return (
-      <div className="app">
-        <Navbar
-          generatePDF={this.generatePDF}
-        />
-        <div className="container pt-3">
-          <div className="row">
-            <div className="col-md-4">
-              <FormAddProduct addProduct={this.addProduct} />
-            </div>
-            <div className="col-md-8">
-              <ProductList
-                products={this.state.products}
-                deleteProduct={this.deleteProduct}
-                editProduct={this.editProduct}
-                summaryProducts={this.state.resumenProductos[0]}
-              />
+    switch (this.state.pagActual) {
+      case "/":
+        return (
+          <div className="app">
+            <Navbar
+              generatePDF={this.generatePDF}
+              cambiarPag={this.cambiarPag}
+            />
+            <div className="container pt-3">
+              <div className="row">
+                <div className="col-md-4">
+                  <FormAddProduct addProduct={this.addProduct} />
+                </div>
+                <div className="col-md-8">
+                  <ProductList
+                    products={this.state.products}
+                    deleteProduct={this.deleteProduct}
+                    editProduct={this.editProduct}
+                    summaryProducts={this.state.resumenProductos[0]}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    )
+        );
+
+      case "cotizar":
+        return (
+          <div className="app">
+            <Navbar
+              generatePDF={this.generatePDF}
+              cambiarPag={this.cambiarPag}
+              boton={this.state.pagActual}
+            />
+            <Cotizar cotizacion={this.state.cotizacion} />
+          </div>
+        );
+
+      default:
+        return;
+    }
   }
 }
