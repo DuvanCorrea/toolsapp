@@ -24,9 +24,12 @@ export default class formulario extends Component {
     },
     gananciaPrenda: 0.49,
     EnvioIncluido: 5000,
+    valorTopeParaDescuento: 70000,
 
     valorPrenda: 0,
     valorDomicilio: 0,
+    descuento: 0,
+    domicilioEstacion: 6000,
   };
 
   onchange = (e) => {
@@ -35,14 +38,30 @@ export default class formulario extends Component {
     });
   };
 
-  onclick = (e) => {
-    console.log("holi");
+  onclick = async (e) => {
     e.preventDefault();
-    this.props.cotizar(this.state);
+
+    /*if (
+      parseInt(this.state.valorDomicilio) + parseInt(this.state.valorPrenda) >=
+      parseInt(this.state.valorTopeParaDescuento)
+    ) {
+      this.setState({
+        descuento: 1000,
+      });
+    }*/
+
+    await this.setState({
+      valorPrenda: parseInt(this.state.valorPrenda, 10),
+      valorDomicilio: parseInt(this.state.valorDomicilio, 10),
+      EnvioIncluido: parseInt(this.state.EnvioIncluido, 10),
+      gananciaPrenda: parseFloat(this.state.gananciaPrenda, 10),
+    });
+
+    this.props.cotizarEnvioPrenda1(this.state);
+    console.log(this.state);
   };
 
   render() {
-    console.log("valor: ", this.props.cotizacion);
     if (this.props.cotizacion !== null) {
       return (
         <div>
@@ -54,7 +73,7 @@ export default class formulario extends Component {
                     Valor en que compramos la prenda
                   </h6>
                   <input
-                    onChange={this.onchange()}
+                    onChange={(e) => this.onchange(e)}
                     name="valorPrenda"
                     type="number"
                     className="form-control"
@@ -63,6 +82,7 @@ export default class formulario extends Component {
                 </div>
               </div>
             </div>
+            <hr></hr>
             <div className="row ">
               <div className="col-md-12 mt-2">
                 <div className="form-group">
@@ -77,6 +97,7 @@ export default class formulario extends Component {
                 </div>
               </div>
             </div>
+            <hr></hr>
             <div className="row ">
               <div className="col-md-2 col-4 mt-2">
                 <div className="form-group">
@@ -90,6 +111,7 @@ export default class formulario extends Component {
                 </div>
               </div>
             </div>
+            <hr></hr>
             <div className="row">
               <div className="col-12 mt-2">
                 <button
@@ -100,20 +122,112 @@ export default class formulario extends Component {
                 </button>
               </div>
             </div>
+            <hr></hr>
           </div>
 
           <div className="card mt-3">
             <div className="card-header">
               <h5>Resumen</h5>
+              <div className="row"></div>
+            </div>
+            <div className="card-body">
               <div className="row">
                 <div className="col-5">
-                  <p>Valor prenda:</p>
+                  <h6 className="text-muted">Prenda</h6>
                 </div>
                 <div className="col-6">
-                  <p>{(this.props.cotizacion.valorPrenda = 0)}</p>
+                  <p>${this.props.cotizacion.valorPrenda}</p>
                 </div>
-                <p></p>
               </div>
+              <hr></hr>
+              <div className="row">
+                <div className="col-5">
+                  <h6 className="text-muted">Domicilio</h6>
+                </div>
+                <div className="col-6">
+                  <p>${this.props.cotizacion.valorDomicilio}</p>
+                </div>
+              </div>
+              <hr></hr>
+              <div className="row">
+                <div className="col-5">
+                  <h6 className="text-muted">Ganancia%</h6>
+                </div>
+                <div className="col-6">
+                  <p>{this.props.cotizacion.gananciaPrenda * 100}%</p>
+                </div>
+              </div>
+              <hr></hr>
+
+              <div className="row">
+                <div className="col-5">
+                  <h6 className="text-muted">Descuento</h6>
+                </div>
+                <div className="col-6">
+                  <p>$0</p>
+                </div>
+              </div>
+              <hr></hr>
+            </div>
+            <div className="card-footer">
+              <div className="row">
+                <div className="col-5">
+                  <h6 className="">Valor de venta normal</h6>
+                </div>
+                <div className="col-6">
+                  <p>
+                    $
+                    {this.props.cotizacion.valorPrenda +
+                      this.props.cotizacion.valorPrenda *
+                        this.props.cotizacion.gananciaPrenda}
+                  </p>
+                </div>
+              </div>
+              <hr></hr>
+              <div className="row">
+                <div className="col-5">
+                  <h6 className="">Valor de venta con domicilio</h6>
+                </div>
+                <div className="col-6">
+                  <p>
+                    $
+                    {this.props.cotizacion.valorPrenda +
+                      this.props.cotizacion.valorPrenda *
+                        this.props.cotizacion.gananciaPrenda +
+                      this.props.cotizacion.valorDomicilio}
+                  </p>
+                </div>
+              </div>
+              <hr></hr>
+              <div className="row">
+                <div className="col-5">
+                  <h6 className="">Valor de venta en estacion</h6>
+                  <label className="text-muted">(Solo si es necesario)</label>
+                </div>
+                <div className="col-6">
+                  <p>
+                    $
+                    {this.props.cotizacion.valorPrenda +
+                      this.props.cotizacion.valorPrenda *
+                        this.props.cotizacion.gananciaPrenda +
+                      6000}
+                  </p>
+                </div>
+              </div>
+              <hr></hr>
+              <div className="row">
+                <div className="col-5">
+                  <h6 className="">Ganancia</h6>
+                </div>
+                <div className="col-6">
+                  <p>
+                    $
+                    {this.props.cotizacion.valorPrenda *
+                      this.props.cotizacion.gananciaPrenda}
+                  </p>
+                </div>
+              </div>
+              <hr></hr>
             </div>
           </div>
         </div>

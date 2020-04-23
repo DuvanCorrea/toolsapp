@@ -22,7 +22,33 @@ export default class App extends Component {
         },
       ],
       pagActual: "cotizar",
-      cotizacion: null,
+      cotizacion: {
+        proveedores: {
+          alonso: {
+            areaCercana: [
+              "la estrella",
+              "caldas",
+              "sabaneta",
+              "itagui",
+              "envigado",
+            ],
+          },
+          alonso: {
+            areaCercana: [
+              "la estrella",
+              "caldas",
+              "sabaneta",
+              "itagui",
+              "envigado",
+            ],
+          },
+        },
+        gananciaPrenda: 0.49,
+        EnvioIncluido: 5000,
+
+        valorPrenda: 0,
+        valorDomicilio: 0,
+      },
     };
   }
 
@@ -273,7 +299,7 @@ export default class App extends Component {
             />
             <Cotizar
               cotizacion={this.state.cotizacion}
-              cotizarEnvioPrenda1={this.state.cotizarEnvioPrenda1}
+              cotizarEnvioPrenda1={this.cotizarEnvioPrenda1}
             />
           </div>
         );
