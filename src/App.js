@@ -43,8 +43,8 @@ export default class App extends Component {
             ],
           },
         },
-        gananciaPrenda: 0.49,
-        EnvioIncluido: 5000,
+        gananciaPrenda: 0,
+        EnvioIncluido: 0,
 
         valorPrenda: 0,
         valorDomicilio: 0,
