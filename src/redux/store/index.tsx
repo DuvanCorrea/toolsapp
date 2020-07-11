@@ -1,12 +1,15 @@
-import { Store, createStore, applyMiddleware } from "redux";
+import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
-function reducers(): any {
-  return { hola: "holi" };
-}
+import productosCotizarReducer from "../productosCotizar";
 
-export default (): Store => {
-  return {
-    ...createStore(reducers, applyMiddleware(thunk)),
-  };
-};
+const rootReducer = combineReducers({
+  productosCotizar: productosCotizarReducer,
+});
+
+// estencion del navegador
+const composeEnhancers: any = compose;
+
+export default function generarStore() {
+  createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+}

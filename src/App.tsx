@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProductosCotizar } from "./redux/actions/productosCotizar";
+import { obtenerProductosCotizarAction } from "./redux/productosCotizar";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (productosCotizar.length === 0) {
-      dispatch(fetchProductosCotizar);
+      dispatch(obtenerProductosCotizarAction);
       setProductosCotizar([{}, {}]);
     } else {
       console.log(productosCotizar);
