@@ -1,4 +1,5 @@
-import { Store, createStore } from "redux";
+import { Store, createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
 function reducers(): any {
   return { hola: "holi" };
@@ -6,6 +7,6 @@ function reducers(): any {
 
 export default (): Store => {
   return {
-    ...createStore(reducers),
+    ...createStore(reducers, applyMiddleware(thunk)),
   };
 };
