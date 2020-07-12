@@ -7,9 +7,14 @@ const rootReducer = combineReducers({
   productosCotizar: productosCotizarReducer,
 });
 
-// estencion del navegador
-const composeEnhancers: any = compose;
+//extencion
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default function generarStore() {
-  createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+  const store = createStore(
+    rootReducer,
+    composeEnhancers(applyMiddleware(thunk))
+  );
+  return store;
 }

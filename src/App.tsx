@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { obtenerProductosCotizarAction } from "./redux/productosCotizar";
+import React, { Fragment } from "react";
+import Prueba from "./Components/Prueba";
 
 const App: React.FC = () => {
-  const dispatch = useDispatch();
-
-  const [productosCotizar, setProductosCotizar]: any = useState([]);
-
-  useEffect(() => {
-    if (productosCotizar.length === 0) {
-      dispatch(obtenerProductosCotizarAction);
-      setProductosCotizar([{}, {}]);
-    } else {
-      console.log(productosCotizar);
-    }
-  });
-
-  return <div>Hola mundo beaby</div>;
+  return (
+    <Fragment>
+      <Prueba></Prueba>
+    </Fragment>
+  );
 };
 export default App;
