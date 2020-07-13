@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
-import Prueba from "./Components/Prueba";
+import Cotizar from "./Components/cotizar/Cotizar";
 
 const App: React.FC = () => {
   return (
     <Fragment>
-      <Prueba></Prueba>
+      <Cotizar />
     </Fragment>
   );
 };

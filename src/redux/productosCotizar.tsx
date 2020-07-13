@@ -28,9 +28,8 @@ export const obtenerProductosCotizarAction = () => async (
   getState: any
 ) => {
   try {
-    const res = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"
-    );
+    const res = await axios.get("http://localhost:3000/cotizador");
+    //console.log(res.data);
     dispatch({
       type: OBTENER_PRODUCTOS_COTIZAR,
       payload: res.data,
