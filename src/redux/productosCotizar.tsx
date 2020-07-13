@@ -30,6 +30,7 @@ export const obtenerProductosCotizarAction = () => async (
   try {
     const res = await axios.get("http://localhost:3000/cotizador");
     //console.log(res.data);
+
     dispatch({
       type: OBTENER_PRODUCTOS_COTIZAR,
       payload: res.data,
