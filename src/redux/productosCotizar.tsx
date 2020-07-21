@@ -41,7 +41,7 @@ export const obtenerProductosCotizarAction = () => async (
   getState: any
 ) => {
   try {
-    const res = await axios.get("http://localhost:3000/cotizador");
+    const res = await axios.get("https://tools-app-1.herokuapp.com/cotizador");
     dispatch({
       type: OBTENER_PRODUCTOS_COTIZAR,
       payload: res.data,
