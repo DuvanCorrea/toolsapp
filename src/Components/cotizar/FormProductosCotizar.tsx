@@ -11,6 +11,13 @@ const FormProductosCotizar: React.FC = () => {
   const dispatch = useDispatch();
   const [productos, setProductos] = useState([]);
   const [pSeleccionado, setpSeleccionado]: any = useState({});
+  const [resumen, setResumen]: any = useState({
+    valorVentaSinEnvios: 0,
+    valorVentaEstacion: 0,
+    valorVentaEnvioDomicilio: 0,
+    ganacia: 0,
+    descuento: 0,
+  });
 
   //console.log(">>> antes ", pSeleccionado);
 
@@ -22,8 +29,24 @@ const FormProductosCotizar: React.FC = () => {
   useEffect(() => {
     loading = true;
     dispatch(obtenerProductosCotizarAction());
+    const resumenAux = {
+      valorVentaSinEnvios:
+        data.prodActual.precioCompra * (data.prodActual.avgGanancia / 100) +
+        data.prodActual.precioCompra,
+      valorVentaEstacion:
+        data.prodActual.precioCompra * (data.prodActual.avgGanancia / 100) +
+        5000 +
+        data.prodActual.precioCompra,
+      valorVentaEnvioDomicilio:
+        data.prodActual.precioCompra * (data.prodActual.avgGanancia / 100) +
+        data.prodActual.costoEnvio +
+        data.prodActual.precioCompra,
+      ganacia:
+        data.prodActual.precioCompra * (data.prodActual.avgGanancia / 100),
+      descuento: 0,
+    };
+    setResumen(resumenAux);
     setpSeleccionado(data.prodActual);
-    console.log(pSeleccionado);
     //console.log("Data en useEf>> ", data.prodActual);
     console.log("efecto");
     loading = false;
@@ -141,6 +164,48 @@ const FormProductosCotizar: React.FC = () => {
           />
         </div>
       </form>
+      {/**************************** Resumen ****************************/}
+      <div className="card">
+        <div className="card-header">
+          <h3>RESUMEN</h3>
+        </div>
+        <div className="card-body">
+          <div className="form-group">
+            <strong>
+              <label>Valor de venta SIN envío</label>
+            </strong>
+            <p>{resumen.valorVentaSinEnvios}</p>
+          </div>
+
+          <div className="form-group">
+            <strong>
+              <label>Valor de venta estación</label>
+            </strong>
+            <p>{resumen.valorVentaEstacion}</p>
+          </div>
+
+          <div className="form-group">
+            <strong>
+              <label>Valor de venta con envío a domicilio</label>
+            </strong>
+            <p>{resumen.valorVentaEnvioDomicilio}</p>
+          </div>
+
+          <div className="form-group">
+            <strong>
+              <label>Descuento (En proceso)</label>
+            </strong>
+            <p>{resumen.descuento}</p>
+          </div>
+
+          <div className="form-group">
+            <strong>
+              <label>Ganancia</label>
+            </strong>
+            <p>{resumen.ganacia}</p>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };

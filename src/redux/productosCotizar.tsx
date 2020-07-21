@@ -42,8 +42,6 @@ export const obtenerProductosCotizarAction = () => async (
 ) => {
   try {
     const res = await axios.get("http://localhost:3000/cotizador");
-    //console.log(res.data);
-
     dispatch({
       type: OBTENER_PRODUCTOS_COTIZAR,
       payload: res.data,
@@ -60,7 +58,6 @@ export const actualizarProductoActual = (pos: any) => async (
 ) => {
   try {
     const newSatete = getState().productosCotizar.array[pos - 1];
-    console.log("state >>> ", newSatete);
     dispatch({
       type: OBTENER_PRODUCTO_ACTUAL,
       payload: newSatete,
